@@ -226,35 +226,6 @@ $start_date = date('Y-m-01', strtotime($current_month));
 
                     </div>
 
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <h3>Progress</h3>
-                        </div>
-                        <div class="card-body">
-                            <?php
-                            // Calculate progress
-                            $actualStmt = $pdo->prepare("SELECT SUM(actual_amount) AS total FROM actual_data 
-                                                        WHERE month_year = ?");
-                            $actualStmt->execute([$start_date]);
-                            $actual = $actualStmt->fetch(PDO::FETCH_ASSOC);
-                            $totalActual = $actual['total'] ?? 0;
-                            $targetAmount = $target['target_amount'] ?? 1;
-                            $progress = ($totalActual / $targetAmount) * 100;
-                            ?>
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" 
-                                     style="width: <?= min($progress, 100) ?>%" 
-                                     aria-valuenow="<?= $progress ?>" 
-                                     aria-valuemin="0" 
-                                     aria-valuemax="100">
-                                    <?= number_format($progress, 2) ?>%
-                                </div>
-                            </div>
-                            <p>Actual: <?= number_format($totalActual, 2) ?> / 
-                               Target: <?= number_format($targetAmount, 2) ?></p>
-                        </div>
-                    </div>
-
                     <!-- Actual Data Entry -->
                     <div class="card">
                         <div class="card-header">
